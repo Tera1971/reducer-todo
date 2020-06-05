@@ -19,67 +19,36 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      todo
+      todo: ''
     };
   }
-  addTodo = (event, task) => {
-    event.preventDefault();
+  handleChanges = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
-    const newTodo = {
-      task: task,
-      id: Date.now(),
-      completed: false
-    };
 
-    this.setState({
-      todo: [...this.state.todo, newTodo]
-    })
-  }
+  submitItem = e => {
+    e.preventDefault();
+    this.setState({ item: '' });
+    this.props.addItem(e, this.state.item);
+  };
 
-  toggleItem = todoId => {
-    console.log(todoId)
-    this.setState({
-      todo: this.state.todo.map(todo => {
-        if (todoId === todo.id) {
-          return {
-            ...todo,
-            completed: !todo.completed
-          };
-        }
-        return todo;
-      })
-    });
-  }
-
-  clearCompleted = event => {
-    event.preventDefault();
-
-    this.setState({
-      todo: this.state.todo.filter(todo => !todo.completed)
-    })
-  }
 
   render() {
+    console.log('rendering form');
     return (
-      <div>
-      <div>
-        <h2>Welcome to your Todo App!</h2>
-      </div>
-      <div className='App'>
-        <div className='header'>
-          <h3>To-do List</h3>
-        </div>
-        <TodoList
-          todo={this.state.todo}
-          toggleItem={this.toggleItem}
+      <form onSubmit={this.submitItem}>
+        <input
+          type="text"
+          value={this.state.item}
+          name="item"
+          onChange={this.handleChanges}
         />
-        <TodoForm
-          addTodo={this.addTodo}
-          clearCompleted={this.clearCompleted} />
-      </div>
-      </div>
+        <button>Add</button>
+      </form>
     );
   }
 }
+
 
 export default App;
