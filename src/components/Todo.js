@@ -1,14 +1,14 @@
 import React from 'react';
 
 const Todo = props => {
-    return (
-        <div
-            className={`task${props.todo.completed ? " completed" : ""}`}
-            onClick={() => props.toggleItem(props.todo.id)}
-        >
-            <p>{props.todo.task}</p>
-        </div>
-    )
-}
+  return (
+    <div>     
+      {className={`item${props.item.complete ? ' complete : ''}`}
+      onClick={() => props.toggleItem(props.item.id)}
+      >
+      <p>{props.item.name}</p>
+    </div>
+  );
+};
 
 export default Todo;
