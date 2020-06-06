@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import Todo from './Todo';
+import TodoList from './TodoList'
 
 class TodoForm extends React.Component {
     constructor() {
         super();
         this.state = { 
-            todo: ''
+            Task: ''
     };
 }
 
@@ -14,8 +16,8 @@ handleChanges = e => {
 
 submitItem = e => {
     e.preventDefault();
-    this.setState({ item: '' });
-    this.props.addTask(e, this.state.item);
+    this.setState({ Task: '' });
+    this.props.addTodo(e, this.state.Task);
 };
  
 render() {
@@ -24,8 +26,8 @@ render() {
         <form onSubmit={this.submitItem}>
             <input
             type="text"
-            value={this.state.item}
-            name="item"
+            value={this.state.Task}
+            name="Task"
             onChange={this.handleChanges}
             />
           <button>Add Task</button>  

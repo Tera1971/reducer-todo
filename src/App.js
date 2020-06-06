@@ -1,26 +1,26 @@
 import React, { Component } from 'react';
-
+import ReactDOM from 'react-dom'
 import TodoForm from './components/TodoForm'
 import TodoList from './components/TodoList'
 
-const todo = [
+const Todo = [
   {
-    task: 'Make Bed',
+    Todo: 'Make Bed',
     id: 2345678,
     completed: false
   },
   {
-    task: 'Laundry',
+    Todo: 'Laundry',
     id: 654321,
     completed: false
   },
   {
-    task: 'Vacuum',
+    Todo: 'Vacuum',
     id: 986754,
     completed: false
   },
   {
-    task: 'Fold Laundry',
+    Todo: 'Fold Laundry',
     id: 873573,
     completed: false
   }
@@ -34,40 +34,41 @@ class App extends React.Component {
   constructor(){
     super();
     this.state = {
-      todo
+      Todo: []
     };
   }
        
-  addItem = (e, item) => {
+  addTodo = (e, Todo) => {
     e.preventDefault();
-    const newItem = {
-    name: item,
+    const newTodo = {
+    name: Todo,
     id: Date.now(),
     completed: false
     };
     this.setState({
-      todo: [...this.state.todo, newItem]
+      Todo: [...this.state.Todo, newTodo]
+      // Todo: ""
     });
   };
 
-  toggleItem = ItemId => {
-    console.log(itemId);
+  toggleTodo = TodoId => {
+    console.log(TodoId);
     this.setState({
-      todo: this.state.todo.map(task => {
-        if (itemId === item.id) {
+      Todo: this.state.Todo.map(Todo => {
+        if (TodoId === Todo.id) {
           return {
-            ...task,
-            complete: !item.completw
+            ...Todo,
+            complete: !Todo.complete
           };
         }
-        return item;
+        return Todo;
       })
     });
   };
 
   clearComplete = e => {
     this.setState({
-      todo: this.state.todo.filter(task => !task.complete)
+      Todo: this.state.Todo.filter(Todo => !Todo.complete)
     });
   };
 
@@ -77,19 +78,19 @@ class App extends React.Component {
       <div className="App">
         <div className="header">
           <h1>Welcome To Your Todo List</h1>
-          <TodoForm addItem={this.addItem} />
+          <TodoForm addTodo={this.addTodo} />
         </div>
         <TodoList
-        todo={this.state.todo}
-        toggleItem={this.toggleItem}
+        Todo={this.state.Todo}
+        toggleTodo={this.toggleTodo}
         clearComplete={this.clearComplete}
         />
       </div>
     );
   }
 }
+export default App;
 
 const rootElement = document.getElementById('root');
 ReactDOM.render(<App />, rootElement);
 
-export default App;
