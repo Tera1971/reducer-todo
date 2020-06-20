@@ -1,39 +1,48 @@
-import React, { Component } from 'react';
-import Todo from './Todo';
+import React, { useReducer, useState } from 'react';
+import { todoReducer, initialState } from '../reducers/todoReducer';
 import TodoList from './TodoList'
 
-class TodoForm extends React.Component {
-    constructor() {
-        super();
-        this.state = { 
-            Task: ''
+const TodoForm = () => {
+    const [state, dispatch] = useReducer(todoReducer, initialState);
+    const [newTask, setNewTask] = useState('');
+
+    const handleChanges = e => {
+        setNewTask(e.target.value);
     };
-}
 
-handleChanges = e => {
-    this.setState({ [e.target.name]: e.target.value  });
-};
+    const toggle = (task) => {
+        dispatch({type: 'TOGGLE_COMPLETED', payload: task})
+        console.log('Toggle Happened')
+    };
+    const onSubmit = e => {
+        e.preventDefault()
+        dispatch({type: 'ADD_TODO', payload: newTask})
+        setNewTask('');
+    };
 
-submitItem = e => {
-    e.preventDefault();
-    this.setState({ Task: '' });
-    this.props.addTodo(e, this.state.Task);
-};
- 
-render() {
-    console.log('rendering form');
     return (
-        <form onSubmit={this.submitItem}>
+        <div>
+            <form onSubmit={onSubmit}>
             <input
-            type="text"
-            value={this.state.Task}
-            name="Task"
-            onChange={this.handleChanges}
-            />
-          <button>Add Task</button>  
-        </form>
-        );
-    }
+                type='text'
+                name='task'
+                value={newTask}
+                onChange={handleChanges}
+
+             />
+                <button>Add Task</button>
+                </form>    
+                <button onClick={() => (dispatch({type: 'CLEAR_COMPLETED'}))} >Clear Complete</button>
+                <TodoList
+                state={state}
+                toggle={toggle}
+                />
+            
+        </div>
+    )
 }
+    
+
+
 
 export default TodoForm;
